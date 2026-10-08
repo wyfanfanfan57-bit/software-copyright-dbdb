@@ -1,9 +1,10 @@
 # software-copyright-dbdb
 
-为中国计算机软件著作权（软著）登记生成两份 Word 鉴别材料的 AI 助手技能：
+为中国计算机软件著作权（软著）登记生成两份 Word 鉴别材料、并辅助在线填报的 AI 助手技能：
 
 - **操作手册（软件说明书）.docx**：封面、单页目录、正文，固定标准版式，截图位置自动留灰框；
-- **源代码页 code.docx**：源程序前 30 页 + 后 30 页（不足 60 页则交全部），连续行号、页眉软件名称与版本、右上角连续页码。
+- **源代码页 code.docx**：源程序前 30 页 + 后 30 页（不足 60 页则交全部），连续行号、页眉软件名称与版本、右上角连续页码；
+- **软著申请表填写内容 .md（可选）**：按在线填报页面截图，逐字段生成可直接复制粘贴的内容，自动核对字数上限；源程序量、开发环境等均以实测为准，身份与日期信息只留占位由使用者填写。
 
 两份 docx 先生成交付人工审核，**经使用者明确确认后才转换 PDF**。
 
@@ -13,6 +14,7 @@
 - 源代码逐字保真：不改写、不格式化、不删空行与注释，严禁用空行/注释凑行数；
 - 切点自动测量：调用 WPS 或 MS Word 后台重分页，二分定位前 30 页 / 后 30 页边界，并逐页校验每页不少于 50 行（末页除外）；
 - 开工前强制确认：输出目标文件夹、源程序位置与提交范围、手册材料、软件全称与版本号；
+- 申请表填报辅助：按在线页面截图生成逐字段复制稿，源程序行数、开发机环境实测取材，各字段字数（50/100/500–1300）交付前自检；
 - 全流程本地运行：不联网、不上传、无遥测；唯一网络行为是首次使用时按需 `pip install python-docx`；
 - 自动兼容 **WPS（KWPS）与 Microsoft Word（Word.Application）**。
 
@@ -38,9 +40,10 @@
 2. 生成源代码页：扫描源码清单（需你确认范围）→ 全量构建 → 测量切点 → 切分 60 页 → 后台校验；
 3. 生成操作手册：助手阅读你提供的材料，编写 `manual_spec.json`，渲染并回填目录页码；
 4. **人工审核闸门**：先拿到两份 docx，自行贴图、核对名称版本与功能描述；你明确回复“审核通过”后，助手才导出 PDF；
-5. 导出后回读 PDF 核对页数与行数。
+5. 导出后回读 PDF 核对页数与行数；
+6. **在线填报辅助（两份 PDF 完成后助手会主动询问）**：你确认需要后，再发来版权中心在线申请表页面截图，助手生成逐字段复制粘贴的 Markdown；源程序量、开发环境等实测填写，身份信息与完成/发表日期由你本人填写。
 
-详细版式规则见 `references/format-spec.md`，手册内容规格见 `references/manual-content-guide.md`。
+详细版式规则见 `references/format-spec.md`，手册内容规格见 `references/manual-content-guide.md`，在线申请表填写内容规则见 `references/application-form-guide.md`。
 
 ## 仓库结构
 
@@ -50,7 +53,8 @@ software-copyright-dbdb/
 ├── LICENSE                           # MIT
 ├── references/
 │   ├── format-spec.md                # 标准版式与 60 页规则
-│   └── manual-content-guide.md       # 手册内容与 manual_spec.json 规格
+│   ├── manual-content-guide.md       # 手册内容与 manual_spec.json 规格
+│   └── application-form-guide.md     # 在线申请表字段、字数上限与填写内容 MD 模板
 └── scripts/
     ├── build_manual.py               # 由 spec 渲染手册 docx
     ├── build_code.py                 # discover / full / cut：发现源码、全量页、60 页切分
