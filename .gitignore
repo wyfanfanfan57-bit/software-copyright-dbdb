@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pylibs/
+pylibs/
+.venv/
+venv/
+
+# Office temp / lock files
+~$*
+*.tmp
+*.bak
+
+# Generated deliverables and work dirs (never commit applicant materials)
+.work/
+work/
+*.docx
+*.pdf
+files.txt
+*_cuts.json
+heading_pages*.json
+manual_spec.json
